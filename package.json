@@ -1,0 +1,30 @@
+{
+  "name": "@garage44/common",
+  "version": "1.0.2",
+  "description": "Component library for Garage44 projects",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "components/**",
+    "lib/**",
+    "scss/**/*",
+    "README.md",
+    "tsconfig.json",
+    "app.ts"
+  ],
+  "scripts": {
+    "lint:scss": "stylelint **/*.scss",
+    "lint:ts": "eslint **/*.{ts,tsx}",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "Garage44",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express-session": "^1.18.1",
+    "express-winston": "^4.2.0",
+    "path-to-regexp": "^8.2.0"
+  }
+}
