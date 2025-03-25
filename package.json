@@ -1,6 +1,6 @@
 {
   "name": "@garage44/common",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Component library for Garage44 projects",
   "publishConfig": {
     "access": "public"
