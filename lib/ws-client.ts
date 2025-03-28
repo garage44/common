@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events'
+import {EventEmitter} from 'node:events'
 import {logger} from '@garage44/common/app'
 
 type MessageData = Record<string, unknown>

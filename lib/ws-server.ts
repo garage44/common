@@ -1,9 +1,10 @@
 import {WebSocket, WebSocketServer} from 'ws'
-import {EventEmitter} from 'events'
-import {Server} from 'node:http'
+import {EventEmitter} from 'node:events'
+import http from 'node:http'
 import {constructMessage} from './ws-client'
 import {logger} from '@garage44/common/app'
 import {match} from 'path-to-regexp'
+
 
 // Core types for the middleware system
 export type MessageData = Record<string, unknown>
@@ -192,7 +193,7 @@ export class WebSocketServerManager extends EventEmitter {
     // Create a middleware enhancer for WebSocket connections
     chainMiddleware(middleware: any, handler: any) {
         return (ws: WebSocket, req: any) => {
-            middleware(req, {} as Response, () => {
+            middleware(req, {} as http.IncomingMessage, () => {
                 handler(ws, req)
             })
         }
@@ -217,21 +218,23 @@ export const RouteTypes = {
 // Factory function to create a new WebSocket server
 export function createWebSocketServer(options: {
     path: string,
-    server: Server,
+    server: http.Server,
     sessionMiddleware?: any,
     authOptions?: {
         noSecurityEnv?: string,
         users?: any[]
     },
-    echoMessages?: boolean // Add option to echo raw messages for simple clients
 }) {
     const manager = new WebSocketServerManager()
+
+    logger.info(`[websocket] creating server: ${options.path}`)
     const wss = new WebSocketServer({
         path: options.path,
         server: options.server,
     })
 
-    const connectionHandler = (ws: WebSocket, req: any) => {
+    const connectionHandler = (ws: WebSocket, req: http.IncomingMessage) => {
+        console.log("CONNECTION HANDLER", req)
         // If using auth and no session or we're not bypassing security
         if (options.authOptions && !req.session &&
             !process.env[options.authOptions.noSecurityEnv || 'GARAGE44_NO_SECURITY']) {
@@ -267,13 +270,6 @@ export function createWebSocketServer(options: {
         } else {
             // No auth required, just add the connection
             manager.connections.add(ws)
-        }
-
-        // For simple echo functionality if requested
-        if (options.echoMessages) {
-            ws.on('message', (message) => {
-                ws.send(message.toString())
-            })
         }
 
         ws.on('message', async(messageData) => {
@@ -330,6 +326,7 @@ export function createWebSocketServer(options: {
         })
     }
 
+    wss.on('connection', connectionHandler)
     // Handle the WebSocket connection with or without session middleware
     if (options.sessionMiddleware) {
         wss.on('connection', manager.chainMiddleware(options.sessionMiddleware, connectionHandler))
