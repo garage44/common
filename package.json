@@ -22,30 +22,26 @@
   "author": "Garage44",
   "license": "MIT",
   "dependencies": {
+    "@garage44/enola": "latest",
     "cookie-parser": "^1.4.7",
+    "express": "5",
     "express-session": "^1.18.1",
     "express-winston": "^4.2.0",
-    "path-to-regexp": "^8.2.0"
-  },
-  "peerDependencies": {
-    "@garage44/tsconfig": ">= 1",
-    "@preact/signals": "^2.0.1",
-    "chokidar": "^4.0.3",
-    "classnames": "^2.5.1",
-    "deepsignal": "^1.6.0",
-    "eventemitter3": "^5.0.1",
-    "express": "5",
-    "fs-extra": "^11.3.0",
-    "glob": "^11.0.1",
-    "i18next": "^24.2.2",
-    "picocolors": "^1.1.1",
+    "path-to-regexp": "^8.2.0",
     "preact": "^10.25.4",
     "preact-router": "^4.1.2",
     "preact-transitioning": "^1.5.2",
-    "rc": "^1.2.8",
+    "@preact/signals": "^2.0.2",
+    "classnames": "^2.5.1",
+    "deepsignal": "^1.6.0",
+    "eventemitter3": "^5.0.1",
+    "i18next": "^24.2.2",
     "tippy.js": "^6.3.7",
     "winston": "^3.17.0",
-    "ws": "^8.18.0",
+    "ws": "^8.18.1",
     "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^9.23.0"
   }
 }

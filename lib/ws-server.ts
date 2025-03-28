@@ -1,6 +1,6 @@
 import {WebSocket, WebSocketServer} from 'ws'
 import {EventEmitter} from 'events'
-import {Server} from 'http'
+import {Server} from 'node:http'
 import {constructMessage} from './ws-client'
 import {logger} from '@garage44/common/app'
 import {match} from 'path-to-regexp'
